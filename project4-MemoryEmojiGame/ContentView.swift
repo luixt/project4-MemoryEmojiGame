@@ -25,8 +25,10 @@ struct ContentView: View {
                     ForEach(game.cards) { card in
                         CardView(card: card)
                             .aspectRatio(2/3, contentMode: .fit)
+                            .scaleEffect(card.isMatched ? 0.1 : 1.0) // Shrink slightly before vanishing
+                            .animation(.easeInOut(duration: 0.5), value: card.isMatched)
                             .onTapGesture {
-                                withAnimation(.easeInOut) {
+                                withAnimation(.spring()) {
                                     game.choose(card)
                                 }
                             }
